@@ -82,6 +82,12 @@ const view = {
       card.addEventListener('animationend', event => event.target.classList.remove('wrong'), { once: true })
     })
   },
+  appendMathcAnime(...cards) {
+    cards.map(card => {
+      card.classList.add('match')
+      card.addEventListener('animationend', event => event.target.classList.remove('match'), { once: true })
+    })
+  },
   showGameFinished() {
     const div = document.createElement('div')
     div.classList.add('completed')
@@ -128,12 +134,13 @@ const controller = {
         if(model.isRevealCardsMatched()) {
           view.renderScore(model.score += 10)
           this.currentState = GAME_STATE.CardsMatched
-          view.pairCards(...model.revealedCards)
+          view.appendMathcAnime(...model.revealedCards)
+          // view.pairCards(...model.revealedCards)
           model.revealedCards = []
           if (model.score === 260) {
             console.log('showGameFinished')
             this.currentState = GAME_STATE.GameFinished
-            view.showGameFinished()  // 加在這裡
+            view.showGameFinished()  
             return
           }
           this.currentState = GAME_STATE.FirstCardAwaits

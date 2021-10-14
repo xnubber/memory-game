@@ -89,6 +89,17 @@
   }
 }
 
+.match {
+  animation: 1s matchAnime ease-in-out;
+}
+@keyframes matchAnime {
+	0% {
+		background: #bcffcc;
+	}
+	100% {
+		background: white;
+	}
+}
 
 
 .completed {
