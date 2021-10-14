@@ -29,8 +29,8 @@
 }
 
 .card p {
-  margin: 3px;
-  font-size: 10px;
+  margin: 10px;
+  font-size: 20px;
 }
 
 .card p:last-child {
@@ -42,10 +42,6 @@
   background-size: cover;
 }
 
-
-.paired {
-  background-color: #dae0e3;
-}
 
 #header {
   display: flex;

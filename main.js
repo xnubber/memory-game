@@ -135,7 +135,6 @@ const controller = {
           view.renderScore(model.score += 10)
           this.currentState = GAME_STATE.CardsMatched
           view.appendMathcAnime(...model.revealedCards)
-          // view.pairCards(...model.revealedCards)
           model.revealedCards = []
           if (model.score === 260) {
             console.log('showGameFinished')
