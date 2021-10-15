@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <audio id="player" src="8 Year Anniversary - Diamond Ortiz.mp3" autoplay="true" loop="ture" ></audio>
   <title>Document</title>
 </head>
 
@@ -53,6 +54,12 @@
       <h2 style="--i:1.75"><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span><span>Memory Game</span></h2>
     </div>
   </section>
+  <div id="music-control-panel">
+    <button onclick="document.getElementById('player').play()">Play</button>
+    <button onclick="document.getElementById('player').pause()">Pause</button>
+    <button onclick="document.getElementById('player').volume += 0.1">Vol +</button>
+    <button onclick="document.getElementById('player').volume -= 0.1">Vol -</button>
+  </div>
   <script src="main.js"></script>
 </body>
 
