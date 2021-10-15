@@ -18,8 +18,17 @@ const Symbols = [
 
 const view = {
   getCardElement(index) {
+    const number = this.transformNumber((index % 13) + 1)
+    const symbol = Symbols[Math.floor(index / 13)]
     return `
-      <div class="card back" data-index="${index}"></div>
+      <div class="card face" data-index="${index}">
+        <div class="card front" id="card${index}" data-index="${index}">
+          <p>${number}</p>
+          <img src="${symbol}" alt="">
+          <p>${number}</p>
+        </div>
+        <div class="card back" data-index="${index}"></div>
+      </div>
     `
   },
 
@@ -57,17 +66,11 @@ const view = {
   flipCards(...cards) {
     cards.map(card => {
       if (card.classList.contains('back')) {
-        card.classList.remove('back')
-        card.innerHTML = this.getCardContent(Number(card.dataset.index))
+        const front = document.querySelector(`#card${card.dataset.index}`)
+        front.style.transform = 'rotateY(0deg)'
+        card.style.transform = 'rotateY(180deg)'
         return
       }
-      card.classList.add('back')
-      card.innerHTML = null
-    })
-  },
-  pairCards(...cards) {
-    cards.map(card => {
-      card.classList.add('paired')
     })
   },
   renderScore(score) {
@@ -88,6 +91,16 @@ const view = {
       card.addEventListener('animationend', event => event.target.classList.remove('match'), { once: true })
     })
   },
+  flipBackFront(...fronts) {
+    fronts.map(front => {
+      front.style.transform = 'rotateY(-180deg)'
+    })
+  },
+  flipBackBack(...backs) {
+    backs.map(back => {
+      back.style.transform = 'rotateY(0deg)'
+    })
+  },
   showGameFinished() {
     const div = document.createElement('div')
     div.classList.add('completed')
@@ -102,6 +115,7 @@ const view = {
 }
 
 const model = {
+  revealedCardsBack: [],
   revealedCards: [],
   isRevealCardsMatched() {
     return this.revealedCards[0].dataset.index % 13 === this.revealedCards[1].dataset.index % 13
@@ -117,6 +131,7 @@ const controller = {
     view.displayCards(utility.getRandomNumberArray(52))
   },
   dispatchCardAction(card) {
+    const front = document.querySelector(`#card${card.dataset.index}`)
     if (!card.classList.contains('back')) {
       return
     }
@@ -124,18 +139,21 @@ const controller = {
     switch (this.currentState) {
       case GAME_STATE.FirstCardAwaits:
         view.flipCards(card)
-        model.revealedCards.push(card)
+        model.revealedCards.push(front)
+        model.revealedCardsBack.push(card)
         this.currentState = GAME_STATE.SecondCardAwaits
         break
       case GAME_STATE.SecondCardAwaits:
         view.renderTriedTimes(++model.triedTimes)
         view.flipCards(card)
-        model.revealedCards.push(card)
+        model.revealedCards.push(front)
+        model.revealedCardsBack.push(card)
         if(model.isRevealCardsMatched()) {
           view.renderScore(model.score += 10)
           this.currentState = GAME_STATE.CardsMatched
           view.appendMathcAnime(...model.revealedCards)
           model.revealedCards = []
+          model.revealedCardsBack = []
           if (model.score === 260) {
             console.log('showGameFinished')
             this.currentState = GAME_STATE.GameFinished
@@ -153,8 +171,10 @@ const controller = {
   },
 
   resetCards() {
-    view.flipCards(...model.revealedCards)
+    view.flipBackFront(...model.revealedCards)
+    view.flipBackBack(...model.revealedCardsBack)
     model.revealedCards = []
+    model.revealedCardsBack = []
     controller.currentState = GAME_STATE.FirstCardAwaits
   }
 }
