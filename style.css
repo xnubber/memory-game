@@ -1,4 +1,7 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:400,500,600,700,900');
+body {
+  margin: 0;
+}
 
 #cards {
   display: flex;
@@ -25,12 +28,15 @@
   background-color: white;
 
   cursor: pointer;
+
+  z-index: 50;
 }
 
 .face {
   position: relative;
   perspective: 500px;
   border: none;
+  background: transparent;
 }
 
 .card img {
@@ -58,7 +64,7 @@
 }
 
 .back {
-  background: url('https://assets-lighthouse.alphacamp.co/uploads/image/file/9222/ExportedContentImage_00.png');
+  background: url('flip.jpg');
   background-size: cover;
 
   border: none;
@@ -77,12 +83,14 @@
   flex-direction: column;
   align-items: flex-end;
   width: 85%;
+  z-index: 50;
 }
 
 #header .title {
   width: 100%;
   display: flex;
   justify-content: flex-end;
+  color: azure;
 }
 
 #header .title img {
@@ -100,6 +108,7 @@
 
 #header .tried {
   margin-top: 0;
+  color: azure;
 }
 
 .wrong {
@@ -144,4 +153,86 @@
   font-size: 3em;
   font-weight: 700;
   color: #758d9a;
+}
+
+
+/* background */
+section {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: rgb(160, 177, 223);
+  z-index: -1;
+}
+.text {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+  transform: skewY(345deg) translateY(-200px);
+  animation: animateColor 5s linear infinite;
+}
+@keyframes animateColor {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+.text h2 {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-size: 8em;
+  color: #fff;
+  pointer-events: none;
+  line-height: 1em;
+  white-space: nowrap;
+  text-shadow: calc(var(--x)) 100px 0 rgba(255, 255, 255, 0.1);
+  transform: translateX(calc(0% - var(--x) * var(--i)));
+}
+.text h2 span {
+  color: #0f0;
+  margin: 0 10px;
+}
+.text h2 span:nth-child(even) {
+  color: transparent;
+  -webkit-text-stroke: 2px #fff;
+}
+
+/* start-btn */
+#start {
+  position: fixed;
+  top: 50vh;
+  left: 47vw;
+  z-index: 100;
+}
+
+#start button {
+  width: 150px;
+  height: 50px;
+  font-size: medium;
+  font-weight: 700;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgb(209, 5, 5);
+  color: white;
+  border-radius: 25%;
+  border: none;
+  letter-spacing: 4px;
+  box-shadow: inset 0 0 0 0 rgba(244, 248, 25, 0.993);
+  transition: ease-out 0.3s;
+}
+
+#start-btn:hover {
+  box-shadow: inset 150px 0 0 0 rgba(244, 248, 25, 0.993);
+  color: #111;
+}
+
+.hidden {
+  display: none;
 }

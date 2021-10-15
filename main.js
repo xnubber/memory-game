@@ -21,7 +21,7 @@ const view = {
     const number = this.transformNumber((index % 13) + 1)
     const symbol = Symbols[Math.floor(index / 13)]
     return `
-      <div class="card face" data-index="${index}">
+      <div class="card face hidden" data-index="${index}">
         <div class="card front" id="card${index}" data-index="${index}">
           <p>${number}</p>
           <img src="${symbol}" alt="">
@@ -195,5 +195,24 @@ controller.generateCards()
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', event => {
     controller.dispatchCardAction(card)
+  })
+})
+
+
+
+
+// background
+const position = document.documentElement;
+position.addEventListener('mousemove', e => {
+  position.style.setProperty('--x', e.clientX + 'px')
+})
+
+// start game
+const startBtn = document.querySelector('#start-btn')
+const cardsPanel = Array.from(document.querySelectorAll('.face'))
+startBtn.addEventListener('click', function startGame(e) {  
+  cardsPanel.forEach(card => {
+    e.target.style.display = 'none'
+    card.classList.remove('hidden')
   })
 })
